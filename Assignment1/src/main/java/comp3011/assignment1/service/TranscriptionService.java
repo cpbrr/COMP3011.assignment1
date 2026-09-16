@@ -27,10 +27,15 @@ public class TranscriptionService {
     private static final String DEFAULT_FILENAME = "recording.webm";
 
     private final RestClient openAiRestClient;
+    private final StatsService statsService;
     private final String model;
 
-    public TranscriptionService(RestClient openAiRestClient, @Value("${openai.api.model}") String model) {
+    public TranscriptionService(
+            RestClient openAiRestClient,
+            StatsService statsService,
+            @Value("${openai.api.model}") String model) {
         this.openAiRestClient = openAiRestClient;
+        this.statsService = statsService;
         this.model = model;
     }
 
@@ -42,6 +47,11 @@ public class TranscriptionService {
         long startedAt = System.nanoTime();
         OpenAiTranscriptionResponse response = callSpeechToText(audio);
         long elapsedMillis = (System.nanoTime() - startedAt) / 1_000_000L;
+
+        // stt api might not return usage so only count token if it does
+        if (response.usage() != null) {
+            statsService.recordTokenUsage(response.usage().inputTokens(), response.usage().outputTokens());
+        }
 
         log.info("Transcribed {} bytes with model {} in {} ms", audio.getSize(), model, elapsedMillis);
 
