@@ -26,4 +26,6 @@ Shared states such as token counts and shutdown uses atomic types, allowing for 
 
 The deployment environment uses a proxy for internet access. `ProxySelector.getDefault()` is used so Javas `HttpClient` uses the JVM proxy settings.
 
+API key is loaded from an env and is not commited/stored/logged. STT will also return a generic error instead of the full upstream response
+
 The project builds with Java 25 (per project setup instructions in Assignment1.pdf slides) and deployment runs Java 26. 
