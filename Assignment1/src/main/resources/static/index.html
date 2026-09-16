@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speech to Text</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<main>
+<h1>Speech to Text</h1>
+
+<div class="controls">
+<button id="startButton" type="button" class="start">Start recording</button>
+<button id="stopButton" type="button" class="stop">Stop recording</button>
+</div>
+
+<p id="status" class="status" role="status" aria-live="polite">Ready to record</p>
+
+<h2>Transcript</h2>
+<p id="transcript" class="transcript" aria-live="polite">No transcript yet</p>
+
+<p id="error" class="error" role="alert" hidden></p>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>
